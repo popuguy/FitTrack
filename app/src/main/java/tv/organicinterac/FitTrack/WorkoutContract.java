@@ -54,6 +54,11 @@ public final class WorkoutContract {
         public static final String COLUMN_REPS = "reps";
         public static final String COLUMN_WORKOUT = "workout";
 
+        public static int getWorkoutFromUri(Uri uri) {
+            return Integer.parseInt(uri.getPathSegments().get(1));
+        }
+
+
         public static Uri buildExerciseWithWorkout(int id) {
             return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_WORKOUT, Integer.toString(id)).build();
         }
@@ -90,6 +95,10 @@ public final class WorkoutContract {
         public static final String TABLE_NAME = "exercisecomplete";
         public static final String COLUMN_EXERCISE = "exercise";
         public static final String COLUMN_COMPLETE_WORKOUT = "completeworkoutid";
+
+        public static String getWorkoutCompleteFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
 
         public static Uri buildExerciseCompleteUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

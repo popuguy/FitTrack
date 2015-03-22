@@ -6,6 +6,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 /**
@@ -23,6 +24,40 @@ public class WorkoutProvider extends ContentProvider {
     private static final int EXERCISE_COMPLETE_WITH_WORKOUT_COMPLETE = 301;
     private static final int WORKOUT_COMPLETE = 400;
 
+    private static final SQLiteQueryBuilder sExerciseByWorkoutQueryBuilder;
+
+    static{
+        sExerciseByWorkoutQueryBuilder = new SQLiteQueryBuilder();
+        sExerciseByWorkoutQueryBuilder.setTables(
+                WorkoutContract.ExerciseEntry.TABLE_NAME + " INNER JOIN " +
+                        WorkoutContract.WorkoutEntry.TABLE_NAME +
+                        " ON " + WorkoutContract.ExerciseEntry.TABLE_NAME + "." +
+                        WorkoutContract.ExerciseEntry.COLUMN_WORKOUT +
+                        " = " + WorkoutContract.WorkoutEntry.TABLE_NAME + "." +
+                        WorkoutContract.WorkoutEntry._ID);
+    }
+
+    private static final String sWorkoutSettingSelection =
+            WorkoutContract.ExerciseEntry.TABLE_NAME +
+                    "." + WorkoutContract.ExerciseEntry.COLUMN_WORKOUT + " = ? ";
+    private static final String sWorkoutCompleteSettingSelection =
+            WorkoutContract.ExerciseComplete.TABLE_NAME +
+                    "." + WorkoutContract.ExerciseComplete.COLUMN_COMPLETE_WORKOUT + " = ? ";
+
+    private Cursor getExerciseByWorkout(Uri uri, String[] projection, String sortOrder) {
+        int workout = WorkoutContract.ExerciseEntry.getWorkoutFromUri(uri);
+        String selection = sWorkoutSettingSelection;
+        String[] selectionArgs = new String[]{Integer.toString(workout)};
+
+        return sExerciseByWorkoutQueryBuilder.query(mOpenDbHelper.getReadableDatabase(),
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+                );
+    }
     private static UriMatcher buildUriMatcher() {
 
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -74,11 +109,51 @@ public class WorkoutProvider extends ContentProvider {
                 );
                 break;
             case EXERCISE_WITH_WORKOUT:
-
+                retCursor = getExerciseByWorkout(uri, projection, sortOrder);
+                break;
+            case EXERCISE_COMPLETE:
+                retCursor = mOpenDbHelper.getReadableDatabase().query(
+                        WorkoutContract.ExerciseComplete.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case EXERCISE_COMPLETE_WITH_WORKOUT_COMPLETE:
+                retCursor = mOpenDbHelper.getReadableDatabase().query(
+                        WorkoutContract.ExerciseComplete.TABLE_NAME,
+                        projection,
+                        sWorkoutCompleteSettingSelection,
+                        new String[]{WorkoutContract.ExerciseComplete.getWorkoutCompleteFromUri(uri)},
+                        null,
+                        null,
+                        sortOrder
+                );
+//                retCursor = getExerciseCompleteByWorkoutComplete(uri, projection, sortOrder);
+                break;
+            case WORKOUT_COMPLETE:
+                retCursor = mOpenDbHelper.getReadableDatabase().query(
+                        WorkoutContract.WorkoutComplete.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        return null;
+        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return retCursor;
     }
+
+
 
     @Override
     public String getType(Uri uri) {
