@@ -54,6 +54,10 @@ public final class WorkoutContract {
         public static final String COLUMN_REPS = "reps";
         public static final String COLUMN_WORKOUT = "workout";
 
+        public static Uri buildExerciseWithWorkout(int id) {
+            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_WORKOUT, Integer.toString(id)).build();
+        }
+
         public static Uri buildExerciseUri(long id){
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }

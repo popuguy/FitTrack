@@ -17,22 +17,24 @@ public class WorkoutProvider extends ContentProvider {
     private WorkoutDbHelper mOpenDbHelper;
 
     private static final int EXERCISE = 100;
+    private static final int EXERCISE_WITH_WORKOUT = 101;
     private static final int WORKOUT = 200;
     private static final int EXERCISE_COMPLETE = 300;
-    private static final int EXERCISE_COMPLETE_WITH_WORKOUT_COMPLETE = 400;
-    private static final int WORKOUT_COMPLETE = 500;
+    private static final int EXERCISE_COMPLETE_WITH_WORKOUT_COMPLETE = 301;
+    private static final int WORKOUT_COMPLETE = 400;
 
     private static UriMatcher buildUriMatcher() {
 
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = WorkoutContract.CONTENT_AUTHORITY;
 
-        // For each type of URI you want to add, create a corresponding code.
         matcher.addURI(authority, WorkoutContract.PATH_EXERCISE, EXERCISE);
         matcher.addURI(authority, WorkoutContract.PATH_WORKOUT, WORKOUT);
         matcher.addURI(authority, WorkoutContract.PATH_COMPLETE_EXERCISE + "/#",
                 EXERCISE_COMPLETE_WITH_WORKOUT_COMPLETE);
+        matcher.addURI(authority, WorkoutContract.PATH_COMPLETE_EXERCISE, EXERCISE_COMPLETE);
         matcher.addURI(authority, WorkoutContract.PATH_COMPLETE_WORKOUT, WORKOUT_COMPLETE);
+        matcher.addURI(authority, WorkoutContract.PATH_EXERCISE + "/#", EXERCISE_WITH_WORKOUT);
 
         return matcher;
     }
@@ -48,7 +50,32 @@ public class WorkoutProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         Cursor retCursor;
+        switch(sUriMatcher.match(uri)) {
+            case EXERCISE:
+                retCursor = mOpenDbHelper.getReadableDatabase().query(
+                        WorkoutContract.ExerciseEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case WORKOUT:
+                retCursor = mOpenDbHelper.getReadableDatabase().query(
+                        WorkoutContract.WorkoutEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case EXERCISE_WITH_WORKOUT:
 
+        }
 
         return null;
     }
