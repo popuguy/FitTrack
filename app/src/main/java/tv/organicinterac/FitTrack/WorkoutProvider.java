@@ -45,9 +45,9 @@ public class WorkoutProvider extends ContentProvider {
                     "." + WorkoutContract.ExerciseComplete.COLUMN_COMPLETE_WORKOUT + " = ? ";
 
     private Cursor getExerciseByWorkout(Uri uri, String[] projection, String sortOrder) {
-        int workout = WorkoutContract.ExerciseEntry.getWorkoutFromUri(uri);
+        long workout = WorkoutContract.ExerciseEntry.getWorkoutFromUri(uri);
         String selection = sWorkoutSettingSelection;
-        String[] selectionArgs = new String[]{Integer.toString(workout)};
+        String[] selectionArgs = new String[]{Long.toString(workout)};
 
         return sExerciseByWorkoutQueryBuilder.query(mOpenDbHelper.getReadableDatabase(),
                 projection,

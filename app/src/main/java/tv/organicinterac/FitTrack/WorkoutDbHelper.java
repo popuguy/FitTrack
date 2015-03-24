@@ -25,13 +25,15 @@ public class WorkoutDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_WORKOUT_TABLE =
                 "CREATE TABLE " + WorkoutEntry.TABLE_NAME + " (" +
                         WorkoutEntry._ID + " INTEGER PRIMARY KEY, " +
-                        WorkoutEntry.COLUMN_WORKOUT_NAME + " TEXT NOT NULL);";
+                        WorkoutEntry.COLUMN_WORKOUT_NAME + " TEXT NOT NULL, " +
+                        WorkoutEntry.COLUMN_VISIBLE + " INT DEFAULT 1);";
         final String SQL_CREATE_EXERCISE_TABLE =
                 "CREATE TABLE " + ExerciseEntry.TABLE_NAME + " (" +
                         ExerciseEntry._ID + " INTEGER PRIMARY KEY, " +
                         ExerciseEntry.COLUMN_EXERCISE_NAME + " TEXT NOT NULL, " +
                         ExerciseEntry.COLUMN_SETS + " TEXT NOT NULL, " +
                         ExerciseEntry.COLUMN_REPS + " TEXT NOT NULL, " +
+                        ExerciseEntry.COLUMN_VISIBLE + " INT DEFAULT 1, " +
                         "FOREIGN KEY (" + ExerciseEntry.COLUMN_WORKOUT + ") REFERENCES " +
                         WorkoutEntry.TABLE_NAME + " (" + WorkoutEntry._ID + "));";
         final String SQL_CREATE_WORKOUT_COMPLETE_TABLE =

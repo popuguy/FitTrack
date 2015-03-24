@@ -53,14 +53,15 @@ public final class WorkoutContract {
         public static final String COLUMN_SETS = "sets";
         public static final String COLUMN_REPS = "reps";
         public static final String COLUMN_WORKOUT = "workout";
+        public static final String COLUMN_VISIBLE = "visible";
 
-        public static int getWorkoutFromUri(Uri uri) {
-            return Integer.parseInt(uri.getPathSegments().get(1));
+        public static long getWorkoutFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(1));
         }
 
 
-        public static Uri buildExerciseWithWorkout(int id) {
-            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_WORKOUT, Integer.toString(id)).build();
+        public static Uri buildExerciseWithWorkout(long id) {
+            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_WORKOUT, Long.toString(id)).build();
         }
 
         public static Uri buildExerciseUri(long id){
@@ -78,6 +79,7 @@ public final class WorkoutContract {
 
         public static final String TABLE_NAME = "workout";
         public static final String COLUMN_WORKOUT_NAME = "name";
+        public static final String COLUMN_VISIBLE = "visible";
 
         public static Uri buildWorkoutUri(long id){
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -104,8 +106,8 @@ public final class WorkoutContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildExerciseCompleteWithWorkoutCompleteId(int id){
-            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_COMPLETE_WORKOUT, Integer.toString(id)).build();
+        public static Uri buildExerciseCompleteWithWorkoutCompleteId(long id){
+            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_COMPLETE_WORKOUT, Long.toString(id)).build();
         }
 
     }
