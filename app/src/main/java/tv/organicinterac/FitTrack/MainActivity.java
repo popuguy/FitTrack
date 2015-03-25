@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,11 +28,22 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends ActionBarActivity {
 
+    PastWorkoutsItemAdapter adapter;
+    ListView lvPastWorkouts;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        ArrayList<String[]> items = new ArrayList<>();
+        items.add(new String[]{"Casey Butt plan A","5/10","","",""});
+        items.add(new String[]{"Casey Butt plan B","5/12","","",""});
+        adapter = new PastWorkoutsItemAdapter(this, R.layout.past_workouts_list_item, items);
+
+        lvPastWorkouts = (ListView) findViewById(R.id.past_workouts_listview);
+        lvPastWorkouts.setAdapter(adapter);
+
 
 
     }

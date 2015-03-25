@@ -1,16 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="100">
-    <TextView
-        android:layout_width="wrap_content"
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="hello\nhello\nhello\nhello\nhello"-->
+            <!--android:id="@+id/sdf" />-->
+        <!--<ImageButton-->
+            <!--android:id="@+id/horizontal_dots_imageview"-->
+            <!--android:layout_width="36dp"-->
+            <!--android:layout_height="36dp"-->
+            <!--android:gravity="right"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignBottom="@+id/sdf"-->
+            <!--android:background="@mipmap/ic_menu_overflow_card_horizontal" />-->
+        <!--</RelativeLayout>-->
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DATE"
-        android:layout_weight="15"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DEFAULT NAME"
-        android:layout_weight="85" />
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="5dp"
+        card_view:cardUseCompatPadding="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/main_card_area_layout">
+                <android.support.v7.widget.Toolbar
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/card_toolbar">
+                    <TextView
+                        android:id="@+id/title_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UNCHANGED"
+                        android:textSize="20sp"/>
+                    <TextView
+                        android:id="@+id/date_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="5/12"
+                        android:textSize="15sp"
+                        android:layout_gravity="right" />
+                </android.support.v7.widget.Toolbar>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray" />
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:orientation="vertical" android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/exercises_layout">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="Front squats"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="Incline presses"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Pull-ups"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+            <ImageButton
+                android:id="@+id/horizontal_dots_imageview"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:gravity="right"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@+id/main_card_area_layout"
+                android:background="@mipmap/ic_menu_overflow_card_horizontal"
+                android:layout_marginRight="8dp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>
