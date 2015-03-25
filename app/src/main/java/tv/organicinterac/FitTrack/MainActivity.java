@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ArrayList<String[]> items = new ArrayList<>();
         items.add(new String[]{"Casey Butt plan A","5/10","","",""});
-        items.add(new String[]{"Casey Butt plan B","5/12","","",""});
+//        items.add(new String[]{"Casey Butt plan B","5/12","","",""});
         adapter = new PastWorkoutsItemAdapter(this, R.layout.past_workouts_list_item, items);
 
         lvPastWorkouts = (ListView) findViewById(R.id.past_workouts_listview);
