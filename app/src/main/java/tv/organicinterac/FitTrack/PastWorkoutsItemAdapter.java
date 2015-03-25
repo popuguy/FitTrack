@@ -25,6 +25,7 @@ public class PastWorkoutsItemAdapter extends ArrayAdapter<String[]> {
     }
     TextView tvTitle;
     TextView tvDate;
+    TextView tvExerciseName;
     ListView lvPastExercises;
     InnerCardItemAdapter adapter;
     LinearLayout llExercisesLayout;
@@ -50,25 +51,8 @@ public class PastWorkoutsItemAdapter extends ArrayAdapter<String[]> {
                 tvDate = (TextView) v.findViewById(R.id.date_textview);
                 tvDate.setText(p[1]);
 
-                ArrayList<String[]> items = new ArrayList<>();
-                items.add(new String[]{"Bentover row"});
-                items.add(new String[]{"Stiff-legged deadlift"});
-                items.add(new String[]{"Squat"});
-
-                adapter = new InnerCardItemAdapter(mContext, R.layout.mini_past_workout_exercise_list_item, items);
-
-                lvPastExercises = (ListView) v.findViewById(R.id.past_exercises_listview);
-                lvPastExercises.setAdapter(adapter);
-//
-//                int numItems = lvPastExercises.getCount();
-//                int firstVisible = lvPastExercises.getFirstVisiblePosition();
-//                View firstItem = lvPastExercises.getChildAt(firstVisible);
-////                int itemHeight = firstItem.getHeight();
-//                lvPastExercises.setMinimumHeight(600);
-//                lvPastExercises.setMinimumHeight(
-//                        lvPastExercises.getCount() *
-//                                lvPastExercises.getChildAt(0).getHeight()
-//                );
+                tvExerciseName = (TextView) v.findViewById(R.id.exercise_name_textview);
+                tvExerciseName.setText(p[2] + "\n" + p[3] + "\n" + p[4]);
 
 
                 // inflate your menu
