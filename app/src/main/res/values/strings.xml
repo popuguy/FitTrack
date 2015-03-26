@@ -6,5 +6,7 @@
     <string name="action_new_workout">New workout</string>
     <string name="action_start_workout">Start workout</string>
     <string name="complete_workout_delete">Delete</string>
+    <string name="drawer_open">Open settings drawer</string>
+    <string name="drawer_close">Close settings drawer</string>
     <color name="white">#FFFFFF</color>
 </resources>

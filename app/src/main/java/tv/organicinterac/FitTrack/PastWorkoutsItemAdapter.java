@@ -38,32 +38,28 @@ public class PastWorkoutsItemAdapter extends ArrayAdapter<String[]> {
             LayoutInflater li;
             li = LayoutInflater.from(getContext());
             v = li.inflate(R.layout.past_workouts_list_item, null);
+            // inflate your menu
+            Toolbar toolbar = (Toolbar) v.findViewById(R.id.card_toolbar);
+            toolbar.inflateMenu(R.menu.card_menu);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    return true;
+                }
+            });
         }
         String[] p = getItem(position);
         /* needs to have name, date, item #1, item #2, item #3 */
         if (p.length == 5) {
+            tvTitle = (TextView) v.findViewById(R.id.title_textview);
+            tvTitle.setText(p[0]);
+            tvDate = (TextView) v.findViewById(R.id.date_textview);
+            tvDate.setText(p[1]);
 
-            Toolbar toolbar = (Toolbar) v.findViewById(R.id.card_toolbar);
-            if (toolbar != null) {
-                tvTitle = (TextView) v.findViewById(R.id.title_textview);
-//                toolbar.setTitle("Card Toolbar");
-                tvTitle.setText(p[0]);
-                tvDate = (TextView) v.findViewById(R.id.date_textview);
-                tvDate.setText(p[1]);
-
-                tvExerciseName = (TextView) v.findViewById(R.id.exercise_name_textview);
-                tvExerciseName.setText(p[2] + "\n" + p[3] + "\n" + p[4]);
+            tvExerciseName = (TextView) v.findViewById(R.id.exercise_name_textview);
+            tvExerciseName.setText(p[2] + "\n" + p[3] + "\n" + p[4]);
 
 
-                // inflate your menu
-                toolbar.inflateMenu(R.menu.card_menu);
-                toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        return true;
-                    }
-                });
-            }
         }
         return v;
     }
