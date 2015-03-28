@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends ActionBarActivity {
 
     PastWorkoutsItemAdapter adapter;
+    NavigationDrawerAdapter mNavBarAdapter;
     ListView lvPastWorkouts;
 
     private ListView mDrawerList;
@@ -41,9 +42,12 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("executed onCreate!!!!!");
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        DatabaseInteraction db = new DatabaseInteraction(this);
+
         ArrayList<String[]> items = new ArrayList<>();
         items.add(new String[]{"Casey Butt plan A","5/10","Bentover row","Squats","Bench press"});
         items.add(new String[]{"Casey Butt plan B","5/12","Front squats","Incline bench press","Pull-ups"});
@@ -54,6 +58,7 @@ public class MainActivity extends ActionBarActivity {
         lvPastWorkouts.setAdapter(adapter);
 
         setupDrawerLayout();
+        addDrawerItems();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -68,9 +73,17 @@ public class MainActivity extends ActionBarActivity {
 
     private void addDrawerItems() {
         String[] osArray = { "Edit Workouts", "Send Feedback" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
+        ArrayList<String[]> list = new ArrayList<>();
+        list.add(new String[]{});
+        list.add(new String[]{});
+        mNavBarAdapter = new NavigationDrawerAdapter(this, 0, list);
+        mDrawerList.setAdapter(mNavBarAdapter);
     }
+//private void addDrawerItems() {
+//    String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
+//    mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+//    mDrawerList.setAdapter(mAdapter);
+//}
 
     private void setupDrawerLayout() {
         mDrawerList = (ListView)findViewById(R.id.navList);mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);

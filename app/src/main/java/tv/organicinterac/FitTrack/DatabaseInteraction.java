@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tv.organicinterac.FitTrack.WorkoutContract.ExerciseEntry;
 import tv.organicinterac.FitTrack.WorkoutContract.WorkoutEntry;
 import tv.organicinterac.FitTrack.WorkoutContract.ExerciseComplete;
@@ -17,6 +20,162 @@ public class DatabaseInteraction  {
 
     public DatabaseInteraction(Context context) {
         mDbHelper = new WorkoutDbHelper(context);
+    }
+
+    public long addCompleteWorkout(long workoutId, long duration, String timeCompleted) {
+        ContentValues values = new ContentValues();
+        values.put(WorkoutComplete.COLUMN_WORKOUT, workoutId);
+        values.put(WorkoutComplete.COLUMN_DURATION, duration);
+        values.put(WorkoutComplete.COLUMN_DATETIME, timeCompleted);
+
+        return mDbHelper.getWritableDatabase().insert(
+                WorkoutComplete.TABLE_NAME,
+                null,
+                values
+        );
+    }
+
+    public long addCompleteExercise(long completeWorkoutId, long exerciseId) {
+        ContentValues values = new ContentValues();
+        values.put(ExerciseComplete.COLUMN_COMPLETE_WORKOUT, completeWorkoutId);
+        values.put(ExerciseComplete.COLUMN_EXERCISE, exerciseId);
+
+        return mDbHelper.getWritableDatabase().insert(
+                ExerciseComplete.TABLE_NAME,
+                null,
+                values
+        );
+    }
+
+    public List<String[]> getCompleteWorkouts() {
+        Cursor completeWorkouts = mDbHelper.getReadableDatabase().query(
+                WorkoutComplete.TABLE_NAME,
+                new String[]{
+                        WorkoutComplete._ID,
+                        WorkoutComplete.COLUMN_WORKOUT,
+                        WorkoutComplete.COLUMN_DATETIME,
+                        WorkoutComplete.COLUMN_DURATION
+                },
+                "*",
+                null,
+                null,
+                null,
+                null
+
+        );
+        List<String[]> workouts = new ArrayList<String[]>();
+        completeWorkouts.moveToFirst();
+        while (!completeWorkouts.isAfterLast()) {
+            String[] workout = new String[]{
+                    Long.toString(completeWorkouts.getLong(
+                            completeWorkouts.getColumnIndexOrThrow(WorkoutComplete._ID))),
+                    Long.toString(completeWorkouts.getLong(
+                            completeWorkouts.getColumnIndexOrThrow(
+                                    WorkoutComplete.COLUMN_WORKOUT))),
+                    completeWorkouts.getString(
+                            completeWorkouts.getColumnIndexOrThrow(
+                                    WorkoutComplete.COLUMN_DATETIME)),
+                    Long.toString(completeWorkouts.getLong(
+                            completeWorkouts.getColumnIndexOrThrow(
+                                    WorkoutComplete.COLUMN_DATETIME)))
+            };
+            workouts.add(workout);
+            completeWorkouts.moveToNext();
+        }
+        return workouts;
+    }
+
+    public List<String[]> getCompleteExercisesByCompleteWorkoutId(long completeWorkoutId) {
+        Cursor completeExercises = mDbHelper.getReadableDatabase().rawQuery(
+                "SELECT ?.?, ?.?, ?.? FROM ? JOIN ? ON ?.? = ?.? WHERE ? = ?",
+                new String[]{
+                        ExerciseEntry.TABLE_NAME, /* table.col for name*/
+                        ExerciseEntry.COLUMN_EXERCISE_NAME,
+                        ExerciseEntry.TABLE_NAME, /* table.col for sets*/
+                        ExerciseEntry.COLUMN_SETS,
+                        ExerciseEntry.TABLE_NAME, /* table.col for reps*/
+                        ExerciseEntry.COLUMN_REPS,
+                        ExerciseComplete.TABLE_NAME,
+                        ExerciseEntry.TABLE_NAME,
+                        ExerciseComplete.TABLE_NAME,
+                        ExerciseComplete.COLUMN_EXERCISE,
+                        ExerciseEntry.TABLE_NAME,
+                        ExerciseEntry._ID,
+                        ExerciseComplete.COLUMN_COMPLETE_WORKOUT,
+                        Long.toString(completeWorkoutId)
+                }
+        );
+        List<String[]> exercises = new ArrayList<>();
+        completeExercises.moveToFirst();
+        while (! completeExercises.isAfterLast()) {
+            String[] exercise = new String[]{
+                completeExercises.getString(0),
+                Long.toString(completeExercises.getLong(1)),
+                Long.toString(completeExercises.getLong(2))
+            };
+            exercises.add(exercise);
+            completeExercises.moveToNext();
+        }
+        return exercises;
+    }
+
+    public List<String[]> getExercisesByWorkout(long workoutId) {
+        Cursor exercisesCursor = mDbHelper.getReadableDatabase().query(
+                ExerciseEntry.TABLE_NAME,
+                new String[]{
+                        ExerciseEntry.COLUMN_EXERCISE_NAME,
+                        ExerciseEntry.COLUMN_SETS,
+                        ExerciseEntry.COLUMN_REPS,
+                        ExerciseEntry.COLUMN_WORKOUT
+
+                },
+                ExerciseEntry.COLUMN_VISIBLE + " = ? AND " + ExerciseEntry.COLUMN_WORKOUT + " = ?",
+                new String[]{"1", Long.toString(workoutId)},
+                null,
+                null,
+                null
+
+        );
+        List<String[]> exercises = new ArrayList<>();
+        exercisesCursor.moveToFirst();
+        while (! exercisesCursor.isAfterLast()) {
+            String[] exercise = new String[]{
+                    exercisesCursor.getString(0),
+                    Long.toString(exercisesCursor.getLong(1)),
+                    Long.toString(exercisesCursor.getLong(2)),
+                    Long.toString(exercisesCursor.getLong(3)),
+            };
+            exercises.add(exercise);
+            exercisesCursor.moveToNext();
+        }
+        return exercises;
+    }
+
+    public List<String[]> getWorkouts() {
+        Cursor workoutsCursor = mDbHelper.getReadableDatabase().query(
+                WorkoutEntry.TABLE_NAME,
+                new String[]{
+                        WorkoutEntry._ID,
+                        WorkoutEntry.COLUMN_WORKOUT_NAME
+                },
+                WorkoutEntry.COLUMN_VISIBLE + " = ?",
+                new String[]{"1"},
+                null,
+                null,
+                null
+
+        );
+        List<String[]> workouts = new ArrayList<>();
+        workoutsCursor.moveToFirst();
+        while (! workoutsCursor.isAfterLast()) {
+            String[] workout = new String[]{
+                    Long.toString(workoutsCursor.getLong(0)),
+                    workoutsCursor.getString(1)
+            };
+            workouts.add(workout);
+            workoutsCursor.moveToNext();
+        }
+        return workouts;
     }
 
     public long addWorkout(String workoutName) {
