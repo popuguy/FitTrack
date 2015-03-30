@@ -3,6 +3,7 @@ package tv.organicinterac.FitTrack;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,40 +49,42 @@ public class DatabaseInteraction  {
     }
 
     public List<String[]> getCompleteWorkouts() {
-        Cursor completeWorkouts = mDbHelper.getReadableDatabase().query(
+        /**
+         * @return string[]{name, id, datetime, duration}
+         */
+        String rawCompleteWorkoutReadQuery = String.format(
+                "SELECT %s.%s, %s, %s, %s FROM %s JOIN %s ON %s.%s = %s.%s;",
+                WorkoutEntry.TABLE_NAME,
+                WorkoutEntry.COLUMN_WORKOUT_NAME,
+                WorkoutComplete._ID,
+                WorkoutComplete.COLUMN_DATETIME,
+                WorkoutComplete.COLUMN_DURATION,
                 WorkoutComplete.TABLE_NAME,
-                new String[]{
-                        WorkoutComplete._ID,
-                        WorkoutComplete.COLUMN_WORKOUT,
-                        WorkoutComplete.COLUMN_DATETIME,
-                        WorkoutComplete.COLUMN_DURATION
-                },
-                "*",
-                null,
-                null,
-                null,
-                null
-
+                WorkoutEntry.TABLE_NAME,
+                WorkoutComplete.TABLE_NAME,
+                WorkoutComplete.COLUMN_WORKOUT,
+                WorkoutEntry.TABLE_NAME,
+                WorkoutEntry._ID
         );
-        List<String[]> workouts = new ArrayList<String[]>();
-        completeWorkouts.moveToFirst();
-        while (!completeWorkouts.isAfterLast()) {
-            String[] workout = new String[]{
-                    Long.toString(completeWorkouts.getLong(
-                            completeWorkouts.getColumnIndexOrThrow(WorkoutComplete._ID))),
-                    Long.toString(completeWorkouts.getLong(
-                            completeWorkouts.getColumnIndexOrThrow(
-                                    WorkoutComplete.COLUMN_WORKOUT))),
-                    completeWorkouts.getString(
-                            completeWorkouts.getColumnIndexOrThrow(
-                                    WorkoutComplete.COLUMN_DATETIME)),
-                    Long.toString(completeWorkouts.getLong(
-                            completeWorkouts.getColumnIndexOrThrow(
-                                    WorkoutComplete.COLUMN_DATETIME)))
-            };
-            workouts.add(workout);
-            completeWorkouts.moveToNext();
-        }
+        System.out.println("Read query: " + rawCompleteWorkoutReadQuery);
+        /* TODO: THIS IS BUGGED */
+//        Cursor completeWorkouts = mDbHelper.getReadableDatabase().rawQuery(
+//                rawCompleteWorkoutReadQuery,
+//                null
+//        );
+
+        List<String[]> workouts = new ArrayList<>();
+//        completeWorkouts.moveToFirst();
+//        while (! completeWorkouts.isAfterLast()) {
+//            String[] workout = new String[]{
+//                    completeWorkouts.getString(0),
+//                    Long.toString(completeWorkouts.getLong(1)),
+//                    completeWorkouts.getString(2),
+//                    Long.toString(completeWorkouts.getLong(3))
+//            };
+//            workouts.add(workout);
+//            completeWorkouts.moveToNext();
+//        }
         return workouts;
     }
 

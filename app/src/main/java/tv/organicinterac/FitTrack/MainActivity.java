@@ -21,7 +21,10 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,25 +40,22 @@ public class MainActivity extends ActionBarActivity {
     ListView lvPastWorkouts;
 
     private ListView mDrawerList;
+    private Button mNewWorkout, mStartWorkout;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    public static final int MAX_COMPLETE_EXERCISES_TO_DISPLAY_ON_CARD = 3;
+    public static final String DATETIME_DATABASE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATETIME_VISIBLE_FORMAT = "MM/dd";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("executed onCreate!!!!!");
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        DatabaseInteraction db = new DatabaseInteraction(this);
 
-        ArrayList<String[]> items = new ArrayList<>();
-        items.add(new String[]{"Casey Butt plan A","5/10","Bentover row","Squats","Bench press"});
-        items.add(new String[]{"Casey Butt plan B","5/12","Front squats","Incline bench press","Pull-ups"});
-//        items.add(new String[]{"Casey Butt plan B","5/12","","",""});
-        adapter = new PastWorkoutsItemAdapter(this, R.layout.past_workouts_list_item, items);
+        setupPastWorkoutsItemAdapter();
 
-        lvPastWorkouts = (ListView) findViewById(R.id.past_workouts_listview);
-        lvPastWorkouts.setAdapter(adapter);
 
         setupDrawerLayout();
         addDrawerItems();
@@ -65,6 +65,52 @@ public class MainActivity extends ActionBarActivity {
 
 
 
+
+
+    }
+
+    private void setupPastWorkoutsItemAdapter() {
+        DatabaseInteraction db = new DatabaseInteraction(this);
+        ArrayList<String[]> items = new ArrayList<>();
+        System.out.println("inside of setupPastWorkoutsItemAdapter()");
+        List <String[]> completeWorkouts = db.getCompleteWorkouts();
+//        for (String[] completeWorkout: completeWorkouts) {
+//            ArrayList<String> item = new ArrayList<>();
+//
+//            List<String[]> completeExercises = db.getCompleteExercisesByCompleteWorkoutId(
+//                    Long.parseLong(completeWorkout[0]));
+//
+//            item.add(completeWorkout[0]);
+//
+//            SimpleDateFormat sdfDatabase = new SimpleDateFormat(DATETIME_DATABASE_FORMAT);
+//            SimpleDateFormat sdfVisible = new SimpleDateFormat(DATETIME_VISIBLE_FORMAT);
+//
+//            Date workoutDate = null;
+//            try {
+//                workoutDate = sdfDatabase.parse(completeWorkout[2]);
+//                item.add(sdfVisible.format(workoutDate));
+//            } catch (ParseException e) {
+//                item.add("DATE ERROR");
+//            }
+//
+//            int numAdded = 0;
+//            for (String[] completeExercise: completeExercises) {
+//                if (numAdded >= MAX_COMPLETE_EXERCISES_TO_DISPLAY_ON_CARD)
+//                    break;
+//                item.add(completeExercise[0]);
+//                numAdded += 1;
+//            }
+//            items.add(item.toArray(new String[item.size()]));
+//        }
+//
+//
+//
+//
+//
+//        adapter = new PastWorkoutsItemAdapter(this, R.layout.past_workouts_list_item, items);
+//
+//        lvPastWorkouts = (ListView) findViewById(R.id.past_workouts_listview);
+//        lvPastWorkouts.setAdapter(adapter);
     }
     @Override
     protected void onPause() {
@@ -130,19 +176,26 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
         // Activate the navigation drawer toggle
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
+        switch (id) {
+            case R.id.action_new_workout:
+                toast("Let's make a new workout!");
+                return true;
+            case R.id.action_start_workout:
+                toast("Time to start a workout");
+                return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toast(String out) {
+        //cuz I'm real lazy like that
+        Toast.makeText(this, out, Toast.LENGTH_SHORT).show();
     }
 }

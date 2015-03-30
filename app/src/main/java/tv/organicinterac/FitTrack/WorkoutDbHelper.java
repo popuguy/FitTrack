@@ -13,7 +13,7 @@ import tv.organicinterac.FitTrack.WorkoutContract.ExerciseComplete;
  */
 public class WorkoutDbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "Workout.db";
 
     public WorkoutDbHelper(Context context) {
@@ -34,6 +34,7 @@ public class WorkoutDbHelper extends SQLiteOpenHelper {
                         ExerciseEntry.COLUMN_SETS + " TEXT NOT NULL, " +
                         ExerciseEntry.COLUMN_REPS + " TEXT NOT NULL, " +
                         ExerciseEntry.COLUMN_VISIBLE + " INT DEFAULT 1, " +
+                        ExerciseEntry.COLUMN_WORKOUT + " INTEGER NOT NULL" +
                         "FOREIGN KEY (" + ExerciseEntry.COLUMN_WORKOUT + ") REFERENCES " +
                         WorkoutEntry.TABLE_NAME + " (" + WorkoutEntry._ID + "));";
         final String SQL_CREATE_WORKOUT_COMPLETE_TABLE =
@@ -41,11 +42,14 @@ public class WorkoutDbHelper extends SQLiteOpenHelper {
                         WorkoutComplete._ID + " INTEGER PRIMARY KEY, " +
                         WorkoutComplete.COLUMN_DATETIME + " TEXT NOT NULL, " +
                         WorkoutComplete.COLUMN_DURATION + " INTEGER NOT NULL, " +
+                        WorkoutComplete.COLUMN_WORKOUT + " INTEGER NOT NULL, " +
                         "FOREIGN KEY (" + WorkoutComplete.COLUMN_WORKOUT + ") REFERENCES " +
                         WorkoutEntry.TABLE_NAME + " (" + WorkoutEntry._ID + "));";
         final String SQL_CREATE_EXERCISE_COMPLETE_TABLE =
                 "CREATE TABLE " + ExerciseComplete.TABLE_NAME + " (" +
                         ExerciseComplete._ID + " INTEGER PRIMARY KEY, " +
+                        ExerciseComplete.COLUMN_COMPLETE_WORKOUT + " INTEGER NOT NULL, " +
+                        ExerciseComplete.COLUMN_EXERCISE + " INTEGER NOT NULL, " +
                         "FOREIGN KEY (" + ExerciseComplete.COLUMN_EXERCISE + ") REFERENCES " +
                         ExerciseEntry.TABLE_NAME + " (" + ExerciseEntry._ID + "), " +
                         "FOREIGN KEY (" + ExerciseComplete.COLUMN_COMPLETE_WORKOUT + ") " +
@@ -62,6 +66,8 @@ public class WorkoutDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + ExerciseEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + WorkoutEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ExerciseComplete.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + WorkoutComplete.TABLE_NAME);
         onCreate(db);
     }
 }
