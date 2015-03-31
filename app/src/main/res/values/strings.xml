@@ -8,5 +8,6 @@
     <string name="complete_workout_delete">Delete</string>
     <string name="drawer_open">Open settings drawer</string>
     <string name="drawer_close">Close settings drawer</string>
+    <string name="workout_title_hint">Workout title</string>
     <color name="white">#FFFFFF</color>
 </resources>

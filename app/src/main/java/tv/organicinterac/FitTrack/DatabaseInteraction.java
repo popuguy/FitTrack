@@ -90,7 +90,7 @@ public class DatabaseInteraction  {
 
     public List<String[]> getCompleteExercisesByCompleteWorkoutId(long completeWorkoutId) {
         Cursor completeExercises = mDbHelper.getReadableDatabase().rawQuery(
-                "SELECT ?.?, ?.?, ?.? FROM ? JOIN ? ON ?.? = ?.? WHERE ? = ?",
+                "SELECT ?.?, ?.?, ?.? FROM ? JOIN ? ON ?.? = ?.? WHERE ? = ?;",
                 new String[]{
                         ExerciseEntry.TABLE_NAME, /* table.col for name*/
                         ExerciseEntry.COLUMN_EXERCISE_NAME,

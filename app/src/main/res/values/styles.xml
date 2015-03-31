@@ -2,6 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#FFC107</item>
+        <item name="colorPrimaryDark">#FFA000</item>
     </style>
     <style name="button" parent="@android:style/Widget.Button">
         <item name="android:gravity">center_vertical|center_horizontal</item>

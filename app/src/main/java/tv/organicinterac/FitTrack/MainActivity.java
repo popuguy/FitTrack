@@ -74,43 +74,43 @@ public class MainActivity extends ActionBarActivity {
         ArrayList<String[]> items = new ArrayList<>();
         System.out.println("inside of setupPastWorkoutsItemAdapter()");
         List <String[]> completeWorkouts = db.getCompleteWorkouts();
-//        for (String[] completeWorkout: completeWorkouts) {
-//            ArrayList<String> item = new ArrayList<>();
-//
-//            List<String[]> completeExercises = db.getCompleteExercisesByCompleteWorkoutId(
-//                    Long.parseLong(completeWorkout[0]));
-//
-//            item.add(completeWorkout[0]);
-//
-//            SimpleDateFormat sdfDatabase = new SimpleDateFormat(DATETIME_DATABASE_FORMAT);
-//            SimpleDateFormat sdfVisible = new SimpleDateFormat(DATETIME_VISIBLE_FORMAT);
-//
-//            Date workoutDate = null;
-//            try {
-//                workoutDate = sdfDatabase.parse(completeWorkout[2]);
-//                item.add(sdfVisible.format(workoutDate));
-//            } catch (ParseException e) {
-//                item.add("DATE ERROR");
-//            }
-//
-//            int numAdded = 0;
-//            for (String[] completeExercise: completeExercises) {
-//                if (numAdded >= MAX_COMPLETE_EXERCISES_TO_DISPLAY_ON_CARD)
-//                    break;
-//                item.add(completeExercise[0]);
-//                numAdded += 1;
-//            }
-//            items.add(item.toArray(new String[item.size()]));
-//        }
-//
-//
-//
-//
-//
-//        adapter = new PastWorkoutsItemAdapter(this, R.layout.past_workouts_list_item, items);
-//
-//        lvPastWorkouts = (ListView) findViewById(R.id.past_workouts_listview);
-//        lvPastWorkouts.setAdapter(adapter);
+        for (String[] completeWorkout: completeWorkouts) {
+            ArrayList<String> item = new ArrayList<>();
+
+            List<String[]> completeExercises = db.getCompleteExercisesByCompleteWorkoutId(
+                    Long.parseLong(completeWorkout[0]));
+
+            item.add(completeWorkout[0]);
+
+            SimpleDateFormat sdfDatabase = new SimpleDateFormat(DATETIME_DATABASE_FORMAT);
+            SimpleDateFormat sdfVisible = new SimpleDateFormat(DATETIME_VISIBLE_FORMAT);
+
+            Date workoutDate = null;
+            try {
+                workoutDate = sdfDatabase.parse(completeWorkout[2]);
+                item.add(sdfVisible.format(workoutDate));
+            } catch (ParseException e) {
+                item.add("DATE ERROR");
+            }
+
+            int numAdded = 0;
+            for (String[] completeExercise: completeExercises) {
+                if (numAdded >= MAX_COMPLETE_EXERCISES_TO_DISPLAY_ON_CARD)
+                    break;
+                item.add(completeExercise[0]);
+                numAdded += 1;
+            }
+            items.add(item.toArray(new String[item.size()]));
+        }
+
+
+
+
+
+        adapter = new PastWorkoutsItemAdapter(this, R.layout.past_workouts_list_item, items);
+
+        lvPastWorkouts = (ListView) findViewById(R.id.past_workouts_listview);
+        lvPastWorkouts.setAdapter(adapter);
     }
     @Override
     protected void onPause() {
