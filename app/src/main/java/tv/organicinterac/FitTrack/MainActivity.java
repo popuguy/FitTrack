@@ -40,9 +40,9 @@ public class MainActivity extends ActionBarActivity {
     ListView lvPastWorkouts;
 
     private ListView mDrawerList;
-    private Button mNewWorkout, mStartWorkout;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private TextView mStartWorkout;
 
     public static final int MAX_COMPLETE_EXERCISES_TO_DISPLAY_ON_CARD = 3;
     public static final String DATETIME_DATABASE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -63,7 +63,13 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
+        mStartWorkout = (TextView) findViewById(R.id.start_workout_textview);
+        mStartWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toast("Let's start to work out!");
+            }
+        });
 
 
 
@@ -187,9 +193,9 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_new_workout:
                 toast("Let's make a new workout!");
                 return true;
-            case R.id.action_start_workout:
-                toast("Time to start a workout");
-                return true;
+//            case R.id.action_start_workout:
+//                toast("Time to start a workout");
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }
