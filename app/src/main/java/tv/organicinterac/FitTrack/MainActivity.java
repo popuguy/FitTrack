@@ -190,9 +190,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         switch (id) {
-            case R.id.action_new_workout:
-                toast("Let's make a new workout!");
-                return true;
+//            case R.id.action_new_workout:
+//                toast("Let's make a new workout!");
+//                return true;
 //            case R.id.action_start_workout:
 //                toast("Time to start a workout");
 //                return true;

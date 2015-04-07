@@ -47,11 +47,12 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:paddingRight="16dp"
-                android:layout_gravity="right"
-                android:text="Start a new workout"
+                android:text="Begin workout"
                 android:textColor="@color/material_blue_grey_900"
                 android:textSize="16sp"
                 />
+
+            <!--android:layout_gravity="right"-->
 
 
             </android.support.v7.widget.Toolbar>
@@ -63,7 +64,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_above="@id/toolbar"/>
+            android:layout_above="@id/toolbar"
+            android:layout_marginBottom="-40dp"
+            android:layout_marginRight="18dp"
+            fab:fab_icon="@drawable/ic_action_new_dark_large"/>
 
 
     </RelativeLayout>
