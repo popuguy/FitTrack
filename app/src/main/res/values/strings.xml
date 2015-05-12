@@ -8,6 +8,11 @@
     <string name="complete_workout_delete">Delete</string>
     <string name="drawer_open">Open settings drawer</string>
     <string name="drawer_close">Close settings drawer</string>
-    <string name="workout_title_hint">Workout title</string>
+    <string name="workout_title_hint">Enter workout title</string>
+    <string name="action_save_workout">SAVE</string>
+    <string name="activity_new_workout_title">New Workout</string>
+    <string name="exercise_title_hint">Enter exercise name</string>
+    <string name="exercise_sets_hint">Enter sets</string>
+    <string name="exercise_reps_hint">Enter reps</string>
     <color name="white">#FFFFFF</color>
 </resources>

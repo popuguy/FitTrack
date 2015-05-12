@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="tv.organicinterac.FitTrack.NewWorkoutActivity"
+            android:label="@string/activity_new_workout_title"
+            android:parentActivityName="tv.organicinterac.FitTrack.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tv.organicinterac.FitTrack.MainActivity" />
+        </activity>
+        <activity
+            android:name="tv.organicinterac.FitTrack.NewExerciseActivity"
+            android:label="@string/activity_new_workout_title"
+            android:parentActivityName="tv.organicinterac.FitTrack.NewExerciseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tv.organicinterac.FitTrack.NewWorkoutActivity" />
+        </activity>
     </application>
 
 </manifest>

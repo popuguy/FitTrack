@@ -3,6 +3,7 @@ package tv.organicinterac.FitTrack;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +23,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private TextView mStartWorkout;
+    private FloatingActionButton mNewWorkout;
 
     public static final int MAX_COMPLETE_EXERCISES_TO_DISPLAY_ON_CARD = 3;
     public static final String DATETIME_DATABASE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -63,6 +67,15 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        mNewWorkout = (FloatingActionButton) findViewById(R.id.new_workout_fab);
+
+        mNewWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startNewWorkoutActivity();
+            }
+        });
+
         mStartWorkout = (TextView) findViewById(R.id.start_workout_textview);
         mStartWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +86,11 @@ public class MainActivity extends ActionBarActivity {
 
 
 
+    }
+
+    private void startNewWorkoutActivity() {
+        Intent intent = new Intent(this, NewWorkoutActivity.class);
+        startActivity(intent);
     }
 
     private void setupPastWorkoutsItemAdapter() {

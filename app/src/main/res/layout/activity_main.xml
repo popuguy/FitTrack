@@ -60,7 +60,8 @@
         <com.getbase.floatingactionbutton.FloatingActionButton
             fab:fab_colorNormal="@color/material_blue_grey_900"
             fab:fab_colorPressed="@color/material_blue_grey_900"
-            android:id="@+id/setter"
+            android:id="@+id/new_workout_fab"
+            android:text="New workout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
