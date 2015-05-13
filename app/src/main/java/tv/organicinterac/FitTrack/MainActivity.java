@@ -35,6 +35,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import tv.organicinterac.FitTrack.NewWorkoutActivity.Exercise;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -48,6 +50,7 @@ public class MainActivity extends ActionBarActivity {
     private TextView mStartWorkout;
     private FloatingActionButton mNewWorkout;
 
+    private static final int NEW_WORKOUT_REQUEST = 1;
     public static final int MAX_COMPLETE_EXERCISES_TO_DISPLAY_ON_CARD = 3;
     public static final String DATETIME_DATABASE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DATETIME_VISIBLE_FORMAT = "MM/dd";
@@ -90,13 +93,12 @@ public class MainActivity extends ActionBarActivity {
 
     private void startNewWorkoutActivity() {
         Intent intent = new Intent(this, NewWorkoutActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, NEW_WORKOUT_REQUEST);
     }
 
     private void setupPastWorkoutsItemAdapter() {
         DatabaseInteraction db = new DatabaseInteraction(this);
         ArrayList<String[]> items = new ArrayList<>();
-        System.out.println("inside of setupPastWorkoutsItemAdapter()");
         List <String[]> completeWorkouts = db.getCompleteWorkouts();
         for (String[] completeWorkout: completeWorkouts) {
             ArrayList<String> item = new ArrayList<>();
@@ -216,6 +218,20 @@ public class MainActivity extends ActionBarActivity {
 //                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == NEW_WORKOUT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                ArrayList<Exercise> newExercises = data.getParcelableArrayListExtra("exercises");
+                String workoutTitle = data.getStringExtra("title");
+                toast(newExercises.get(0).getName());
+//                toast("Workout saved");
+            } else if (resultCode == RESULT_CANCELED) {
+                toast("Workout not saved");
+            }
+        }
     }
 
     private void toast(String out) {

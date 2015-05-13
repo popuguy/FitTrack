@@ -11,6 +11,7 @@
         android:layout_weight="0.1">
 
         <EditText
+            android:id="@+id/workout_title_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
