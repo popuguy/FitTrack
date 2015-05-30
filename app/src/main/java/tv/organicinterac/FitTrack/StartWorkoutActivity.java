@@ -35,8 +35,14 @@ public class StartWorkoutActivity extends ActionBarActivity {
         //TODO: make launch the running activity
 
                 toast(selected);
+                startRunningWorkout();
             }
         });
+    }
+
+    private void startRunningWorkout() {
+        Intent intent = new Intent(this, RunningWorkoutActivity.class);
+        startActivity(intent);
     }
 
     public List<String[]> getWorkoutTitles() {
