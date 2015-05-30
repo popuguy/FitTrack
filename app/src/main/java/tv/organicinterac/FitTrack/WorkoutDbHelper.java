@@ -34,7 +34,7 @@ public class WorkoutDbHelper extends SQLiteOpenHelper {
                         ExerciseEntry.COLUMN_SETS + " TEXT NOT NULL, " +
                         ExerciseEntry.COLUMN_REPS + " TEXT NOT NULL, " +
                         ExerciseEntry.COLUMN_VISIBLE + " INT DEFAULT 1, " +
-                        ExerciseEntry.COLUMN_WORKOUT + " INTEGER NOT NULL" +
+                        ExerciseEntry.COLUMN_WORKOUT + " INTEGER NOT NULL, " +
                         "FOREIGN KEY (" + ExerciseEntry.COLUMN_WORKOUT + ") REFERENCES " +
                         WorkoutEntry.TABLE_NAME + " (" + WorkoutEntry._ID + "));";
         final String SQL_CREATE_WORKOUT_COMPLETE_TABLE =

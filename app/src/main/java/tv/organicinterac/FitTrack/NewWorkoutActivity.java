@@ -66,10 +66,7 @@ public class NewWorkoutActivity extends ActionBarActivity {
                 String name = results.getString("name");
                 int sets = results.getInt("sets");
                 int reps = results.getInt("reps");
-                Exercise newExercise = new Exercise();
-                newExercise.setName(name);
-                newExercise.setSets(sets);
-                newExercise.setReps(reps);
+                Exercise newExercise = new Exercise(name, sets, reps);
                 mReturnExercises.add(newExercise);
                 mAdapter.add(new String[]{name, Integer.toString(sets), Integer.toString(reps)});
             } else if (resultCode == RESULT_CANCELED) {
@@ -108,32 +105,82 @@ public class NewWorkoutActivity extends ActionBarActivity {
         Toast.makeText(this.getApplicationContext(), out, Toast.LENGTH_SHORT).show();
     }
 
-    public class Exercise implements Parcelable {
-        private int sets, reps;
-        private String name;
+//    public class Exercise implements Parcelable {
+//        private int sets, reps;
+//        private String name;
+//
+//        public int getSets() {
+//            return sets;
+//        }
+//        public int getReps() {
+//            return reps;
+//        }
+//        public void setSets(int sets) {
+//            this.sets = sets;
+//        }
+//        public void setReps(int reps) {
+//            this.reps = reps;
+//        }
+//        public String getName() {
+//            return name;
+//        }
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        @Override
+//        public int describeContents() {
+//            return this.hashCode();
+//        }
+//
+//        @Override
+//        public void writeToParcel(Parcel dest, int flags) {
+//            dest.writeInt(sets);
+//            dest.writeInt(reps);
+//            dest.writeString(name);
+//        }
+//
+//        public Exercise(String name, int sets, int reps){
+//            this.name = name;
+//            this.sets = sets;
+//            this.reps = reps;
+//        }
+//        public Exercise(Parcel in) {
+//
+//        }
+//    }
+
+    static class Exercise implements Parcelable {
+        int sets;
+        int reps;
+        String name;
+        Exercise(String name, int sets, int reps) {
+            this.name = name;
+            this.sets = sets;
+            this.reps = reps;
+        }
+
+        protected Exercise(Parcel in) {
+            sets = in.readInt();
+            reps = in.readInt();
+            name = in.readString();
+        }
+
+        public String getName() {
+            return name;
+        }
 
         public int getSets() {
             return sets;
         }
+
         public int getReps() {
             return reps;
-        }
-        public void setSets(int sets) {
-            this.sets = sets;
-        }
-        public void setReps(int reps) {
-            this.reps = reps;
-        }
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
         }
 
         @Override
         public int describeContents() {
-            return this.hashCode();
+            return 0;
         }
 
         @Override
@@ -142,15 +189,28 @@ public class NewWorkoutActivity extends ActionBarActivity {
             dest.writeInt(reps);
             dest.writeString(name);
         }
+
+        @SuppressWarnings("unused")
+        public static final Parcelable.Creator<Exercise> CREATOR = new Parcelable.Creator<Exercise>() {
+            @Override
+            public Exercise createFromParcel(Parcel in) {
+                return new Exercise(in);
+            }
+
+            @Override
+            public Exercise[] newArray(int size) {
+                return new Exercise[size];
+            }
+        };
     }
 
-//    class Exercise implements Serializable {
+//    class Exercise{
 //        int sets, reps;
 //        String name;
-//        Exercise(String n, int s, int r) {
-//            name = n;
-//            sets = s;
-//            reps = r;
+//        Exercise(String name, int sets, int reps) {
+//            this.name = name;
+//            this.sets = sets;
+//            this.reps = reps;
 //        }
 //    }
 

@@ -226,8 +226,16 @@ public class MainActivity extends ActionBarActivity {
             if (resultCode == RESULT_OK) {
                 ArrayList<Exercise> newExercises = data.getParcelableArrayListExtra("exercises");
                 String workoutTitle = data.getStringExtra("title");
-                toast(newExercises.get(0).getName());
-//                toast("Workout saved");
+//                toast(newExercises.get(0).getName());
+                DatabaseInteraction di = new DatabaseInteraction(this);
+                long row = di.addWorkout(workoutTitle);
+                for (Exercise exercise: newExercises) {
+                    di.addExercise(exercise.getName(),
+                            Integer.toString(exercise.getSets()),
+                            Integer.toString(exercise.getReps()),
+                            row);
+                }
+                toast("Workout saved");
             } else if (resultCode == RESULT_CANCELED) {
                 toast("Workout not saved");
             }
