@@ -84,11 +84,17 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 toast("Let's start to work out!");
+                startWorkoutActivity();
             }
         });
 
 
 
+    }
+    private void startWorkoutActivity() {
+        //TODO: make it actually do something
+        Intent intent = new Intent(this, StartWorkoutActivity.class);
+        startActivity(intent);
     }
 
     private void startNewWorkoutActivity() {

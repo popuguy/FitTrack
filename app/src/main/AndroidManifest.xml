@@ -32,6 +32,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tv.organicinterac.FitTrack.NewWorkoutActivity" />
         </activity>
+        <activity
+            android:name="tv.organicinterac.FitTrack.StartWorkoutActivity"
+            android:label="@string/activity_new_workout_title"
+            android:parentActivityName="tv.organicinterac.FitTrack.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tv.organicinterac.FitTrack.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

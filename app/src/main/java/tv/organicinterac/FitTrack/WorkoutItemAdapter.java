@@ -14,8 +14,10 @@ import java.util.List;
  * Created by Paul on 3/7/2015.
  */
 public class WorkoutItemAdapter extends ArrayAdapter<String[]> {
+    Context mContext;
     public WorkoutItemAdapter(Context context, int resource, List<String[]> items) {
         super(context, resource, items);
+        mContext = context;
     }
 
     @Override
