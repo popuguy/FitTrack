@@ -6,7 +6,9 @@
         android:id="@+id/exercises_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/finish_button"></ListView>
+        android:layout_above="@+id/finish_button"
+        android:layout_alignParentTop="true"
+        ></ListView>
     <Button
         android:id="@+id/finish_button"
         android:text="COMPLETE WORKOUT"

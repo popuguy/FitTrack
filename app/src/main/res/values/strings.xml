@@ -14,5 +14,9 @@
     <string name="exercise_title_hint">Enter exercise name</string>
     <string name="exercise_sets_hint">Enter sets</string>
     <string name="exercise_reps_hint">Enter reps</string>
+    <string name="action_finish_workout">FINISH</string>
+    <string name="title_running_workout">Running</string>
+    <string name="activity_new_exercise_title">New Exercise</string>
+    <string name="activity_start_workout_title">Start a Workout</string>
     <color name="white">#FFFFFF</color>
 </resources>
