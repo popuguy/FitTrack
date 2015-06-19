@@ -129,7 +129,8 @@ public class DatabaseInteraction  {
                         ExerciseEntry.COLUMN_EXERCISE_NAME,
                         ExerciseEntry.COLUMN_SETS,
                         ExerciseEntry.COLUMN_REPS,
-                        ExerciseEntry.COLUMN_WORKOUT
+                        ExerciseEntry.COLUMN_WORKOUT,
+                        ExerciseEntry._ID
 
                 },
                 ExerciseEntry.COLUMN_VISIBLE + " = ? AND " + ExerciseEntry.COLUMN_WORKOUT + " = ?",
@@ -309,5 +310,8 @@ public class DatabaseInteraction  {
         );
 
         return exerciseRowsModified;
+    }
+    public void completeInteraction(){
+        mDbHelper.close();
     }
 }

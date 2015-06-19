@@ -20,8 +20,8 @@ public class RunningExerciseItemAdapter extends ArrayAdapter<String[]> {
         super(context, resource, items);
         mContext = context;
     }
-    TextView mExerciseNameTextView, mExerciseSetsRepsTextView;
-    CheckBox mCB1, mCB2, mCB3, mCB4, mCB5;
+    private TextView mExerciseNameTextView, mExerciseSetsRepsTextView;
+    private CheckBox mCB1, mCB2, mCB3, mCB4, mCB5;
     int mSets;
 
     @Override
@@ -72,5 +72,8 @@ public class RunningExerciseItemAdapter extends ArrayAdapter<String[]> {
             }
         }
         return v;
+    }
+    public int[] getFinishedSets() {
+        return null;
     }
 }
